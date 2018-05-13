@@ -7,29 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5380735C20A825C900FB9F22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380735B20A825C900FB9F22 /* AppDelegate.swift */; };
-		5380735E20A825C900FB9F22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380735D20A825C900FB9F22 /* ViewController.swift */; };
-		5380736120A825C900FB9F22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5380735F20A825C900FB9F22 /* Main.storyboard */; };
-		5380736320A825CB00FB9F22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5380736220A825CB00FB9F22 /* Assets.xcassets */; };
-		5380736620A825CB00FB9F22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5380736420A825CB00FB9F22 /* LaunchScreen.storyboard */; };
-		5380737020A8266B00FB9F22 /* NLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380736F20A8266B00FB9F22 /* NLCache.swift */; };
-		5380737220A8267B00FB9F22 /* NLMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380737120A8267B00FB9F22 /* NLMemoryCache.swift */; };
-		5380737420A8269900FB9F22 /* NLDoubleLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380737320A8269900FB9F22 /* NLDoubleLinkedList.swift */; };
-		5380737620A826AB00FB9F22 /* NLListNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5380737520A826AB00FB9F22 /* NLListNode.swift */; };
+		5380737820A828D400FB9F22 /* NLCache in Resources */ = {isa = PBXBuildFile; fileRef = 5380737720A828D400FB9F22 /* NLCache */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5380735820A825C900FB9F22 /* NLCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NLCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5380735B20A825C900FB9F22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5380735D20A825C900FB9F22 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5380736020A825C900FB9F22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5380736220A825CB00FB9F22 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5380736520A825CB00FB9F22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		5380736720A825CB00FB9F22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5380736F20A8266B00FB9F22 /* NLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLCache.swift; sourceTree = "<group>"; };
-		5380737120A8267B00FB9F22 /* NLMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLMemoryCache.swift; sourceTree = "<group>"; };
-		5380737320A8269900FB9F22 /* NLDoubleLinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLDoubleLinkedList.swift; sourceTree = "<group>"; };
-		5380737520A826AB00FB9F22 /* NLListNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLListNode.swift; sourceTree = "<group>"; };
+		5380737720A828D400FB9F22 /* NLCache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = NLCache; path = ../NLCache; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +29,7 @@
 		5380734F20A825C900FB9F22 = {
 			isa = PBXGroup;
 			children = (
-				5380736D20A8263500FB9F22 /* NLCacheDemo */,
-				5380735A20A825C900FB9F22 /* NLCache */,
+				5380737720A828D400FB9F22 /* NLCache */,
 				5380735920A825C900FB9F22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,38 +40,6 @@
 				5380735820A825C900FB9F22 /* NLCache.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		5380735A20A825C900FB9F22 /* NLCache */ = {
-			isa = PBXGroup;
-			children = (
-				5380736F20A8266B00FB9F22 /* NLCache.swift */,
-				5380737120A8267B00FB9F22 /* NLMemoryCache.swift */,
-				5380737320A8269900FB9F22 /* NLDoubleLinkedList.swift */,
-				5380737520A826AB00FB9F22 /* NLListNode.swift */,
-			);
-			path = NLCache;
-			sourceTree = "<group>";
-		};
-		5380736D20A8263500FB9F22 /* NLCacheDemo */ = {
-			isa = PBXGroup;
-			children = (
-				5380735F20A825C900FB9F22 /* Main.storyboard */,
-				5380735D20A825C900FB9F22 /* ViewController.swift */,
-				5380736E20A8264B00FB9F22 /* SupptringFiles */,
-			);
-			path = NLCacheDemo;
-			sourceTree = "<group>";
-		};
-		5380736E20A8264B00FB9F22 /* SupptringFiles */ = {
-			isa = PBXGroup;
-			children = (
-				5380736220A825CB00FB9F22 /* Assets.xcassets */,
-				5380736720A825CB00FB9F22 /* Info.plist */,
-				5380736420A825CB00FB9F22 /* LaunchScreen.storyboard */,
-				5380735B20A825C900FB9F22 /* AppDelegate.swift */,
-			);
-			path = SupptringFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +100,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5380736620A825CB00FB9F22 /* LaunchScreen.storyboard in Resources */,
-				5380736320A825CB00FB9F22 /* Assets.xcassets in Resources */,
-				5380736120A825C900FB9F22 /* Main.storyboard in Resources */,
+				5380737820A828D400FB9F22 /* NLCache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,35 +111,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5380737020A8266B00FB9F22 /* NLCache.swift in Sources */,
-				5380737220A8267B00FB9F22 /* NLMemoryCache.swift in Sources */,
-				5380735E20A825C900FB9F22 /* ViewController.swift in Sources */,
-				5380737420A8269900FB9F22 /* NLDoubleLinkedList.swift in Sources */,
-				5380735C20A825C900FB9F22 /* AppDelegate.swift in Sources */,
-				5380737620A826AB00FB9F22 /* NLListNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		5380735F20A825C900FB9F22 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5380736020A825C900FB9F22 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5380736420A825CB00FB9F22 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5380736520A825CB00FB9F22 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5380736820A825CB00FB9F22 /* Debug */ = {
