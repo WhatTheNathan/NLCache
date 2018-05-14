@@ -10,27 +10,62 @@ import Foundation
 
 /**
  * NLMemoryCache is a fast in-memory cache that stores key-value pairs
+ *
+ * Thread Safety
+ * For common write & read: semaphore lock & current thread
+ * For auto release:
+ * if async:
+ *      Semaphore lock + concurrent queue
+ * else if release on main thread:
+ *      Semaphore lock + main thread
+ *
+ * QuestionMark: 异步到并行队列后加锁的读写效率如何?
  **/
 open class NLMemoryCache {
     
+// MARK: Open Property
     // shared instance
-    static let shared = NLMemoryCache()
+    open static let shared = NLMemoryCache()
     
-    //
-//    fileprivate queue = 
+// MARK: Private Property
+    // Serial Queue
+    var queue : DispatchQueue
     
     // Lock
     fileprivate let semaphoreLock = DispatchSemaphore(value: 1)
     
     /* Designed constructer */
     private init() {
-        
+        queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .default)
     }
 }
 
-/**
- * Lock for thread-safe
- **/
+// MARK: Public Method
+extension NLMemoryCache {
+    /**
+     - parameter object:
+     - parameter key:
+     **/
+    public func set(object: AnyObject, for key: String) {
+        
+    }
+    
+    /**
+     
+     **/
+    public func get(object: AnyObject, for key: String) {
+        
+    }
+    
+    /**
+     
+     **/
+    public func containsObject(for key: String) -> Bool{
+        return true
+    }
+}
+
+// MARK: Lock Method
 extension NLMemoryCache {
     fileprivate func lock() {
         _ = semaphoreLock.wait(timeout: .distantFuture)
