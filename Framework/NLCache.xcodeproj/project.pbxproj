@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5360E63420A831BB005BBB47 /* NLCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5360E63220A831BB005BBB47 /* NLCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5360E63E20A831ED005BBB47 /* NLDoubleLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63A20A831ED005BBB47 /* NLDoubleLinkedList.swift */; };
+		5360E63E20A831ED005BBB47 /* NLLinkedMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63A20A831ED005BBB47 /* NLLinkedMap.swift */; };
 		5360E63F20A831ED005BBB47 /* NLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63B20A831ED005BBB47 /* NLCache.swift */; };
-		5360E64020A831ED005BBB47 /* NLListNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63C20A831ED005BBB47 /* NLListNode.swift */; };
+		5360E64020A831ED005BBB47 /* NLLinkedMapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */; };
 		5360E64120A831ED005BBB47 /* NLMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */; };
 /* End PBXBuildFile section */
 
@@ -18,9 +18,9 @@
 		5360E62F20A831BB005BBB47 /* NLCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NLCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5360E63220A831BB005BBB47 /* NLCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NLCache.h; sourceTree = "<group>"; };
 		5360E63320A831BB005BBB47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5360E63A20A831ED005BBB47 /* NLDoubleLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLDoubleLinkedList.swift; path = ../../NLCache/NLDoubleLinkedList.swift; sourceTree = "<group>"; };
+		5360E63A20A831ED005BBB47 /* NLLinkedMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLLinkedMap.swift; path = ../../NLCache/NLLinkedMap.swift; sourceTree = "<group>"; };
 		5360E63B20A831ED005BBB47 /* NLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLCache.swift; path = ../../NLCache/NLCache.swift; sourceTree = "<group>"; };
-		5360E63C20A831ED005BBB47 /* NLListNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLListNode.swift; path = ../../NLCache/NLListNode.swift; sourceTree = "<group>"; };
+		5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLLinkedMapNode.swift; path = ../../NLCache/NLLinkedMapNode.swift; sourceTree = "<group>"; };
 		5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLMemoryCache.swift; path = ../../NLCache/NLMemoryCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,8 +55,8 @@
 			isa = PBXGroup;
 			children = (
 				5360E63B20A831ED005BBB47 /* NLCache.swift */,
-				5360E63A20A831ED005BBB47 /* NLDoubleLinkedList.swift */,
-				5360E63C20A831ED005BBB47 /* NLListNode.swift */,
+				5360E63A20A831ED005BBB47 /* NLLinkedMap.swift */,
+				5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */,
 				5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */,
 				5360E63220A831BB005BBB47 /* NLCache.h */,
 				5360E63320A831BB005BBB47 /* Info.plist */,
@@ -145,8 +145,8 @@
 			files = (
 				5360E63F20A831ED005BBB47 /* NLCache.swift in Sources */,
 				5360E64120A831ED005BBB47 /* NLMemoryCache.swift in Sources */,
-				5360E63E20A831ED005BBB47 /* NLDoubleLinkedList.swift in Sources */,
-				5360E64020A831ED005BBB47 /* NLListNode.swift in Sources */,
+				5360E63E20A831ED005BBB47 /* NLLinkedMap.swift in Sources */,
+				5360E64020A831ED005BBB47 /* NLLinkedMapNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

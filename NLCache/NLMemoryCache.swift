@@ -31,12 +31,16 @@ open class NLMemoryCache {
     // Serial Queue
     var queue : DispatchQueue
     
+    // LinkedMap
+    var linkedMap : NLLinkedMap<AnyObject>
+    
     // Lock
     fileprivate let semaphoreLock = DispatchSemaphore(value: 1)
     
     /* Designed constructer */
     private init() {
         queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .default)
+        linkedMap = NLLinkedMap.init()
     }
 }
 
