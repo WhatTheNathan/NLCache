@@ -32,7 +32,7 @@ open class NLMemoryCache {
     var queue : DispatchQueue
     
     // LinkedMap
-    var linkedMap : NLLinkedMap<AnyObject>
+    var linkedMap : NLLinkedMap<Any>
     
     // Lock
     fileprivate let semaphoreLock = DispatchSemaphore(value: 1)
@@ -50,14 +50,14 @@ extension NLMemoryCache {
      - parameter object:
      - parameter key:
      **/
-    public func set(object: AnyObject, for key: String) {
+    public func set(object: Any, for key: String) {
         
     }
     
     /**
      
      **/
-    public func get(object: AnyObject, for key: String) {
+    public func get(object: Any, for key: String) {
         
     }
     
