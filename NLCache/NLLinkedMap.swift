@@ -21,8 +21,8 @@ internal class NLLinkedMap<T> {
     weak var _head : Node?
     // Least Recently Used
     weak var _tail : Node?
-    private var totalCost : UInt = 0
-    private var totalCount : UInt = 0
+    var totalCost : UInt = 0
+    var totalCount : UInt = 0
     
     // MARK: Internal
     init() {

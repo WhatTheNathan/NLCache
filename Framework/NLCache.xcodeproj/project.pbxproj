@@ -55,9 +55,9 @@
 			isa = PBXGroup;
 			children = (
 				5360E63B20A831ED005BBB47 /* NLCache.swift */,
+				5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */,
 				5360E63A20A831ED005BBB47 /* NLLinkedMap.swift */,
 				5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */,
-				5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */,
 				5360E63220A831BB005BBB47 /* NLCache.h */,
 				5360E63320A831BB005BBB47 /* Info.plist */,
 			);

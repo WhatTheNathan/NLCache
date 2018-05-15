@@ -84,10 +84,10 @@
 		5360E66B20A9CD3A005BBB47 /* NLCache */ = {
 			isa = PBXGroup;
 			children = (
-				5360E66C20A9CD3A005BBB47 /* NLMemoryCache.swift */,
-				5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */,
-				5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */,
 				5360E66F20A9CD3A005BBB47 /* NLCache.swift */,
+				5360E66C20A9CD3A005BBB47 /* NLMemoryCache.swift */,
+				5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */,
+				5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */,
 			);
 			name = NLCache;
 			path = ../NLCache;

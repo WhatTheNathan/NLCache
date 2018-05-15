@@ -13,6 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let cache = NLMemoryCache.shared
+        cache.set(object: "haha", forKey: "1")
+        let object = cache.object(forKey: "1")
+        print(cache.containsObjectFor(key: "1"))
+        cache.removeObjectFor(key: "1")
+        print(cache.containsObjectFor(key: "1"))
     }
 
     override func didReceiveMemoryWarning() {

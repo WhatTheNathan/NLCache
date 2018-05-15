@@ -27,6 +27,25 @@ open class NLMemoryCache {
     // shared instance
     open static let shared = NLMemoryCache()
     
+// MARK: Public Property
+    public var totalCount : UInt {
+        get {
+            lock()
+            let count = linkedMap.totalCount
+            unlock()
+            return count
+        }
+    }
+    
+    public var totalCost : UInt {
+        get {
+            lock()
+            let cost = linkedMap.totalCost
+            unlock()
+            return cost
+        }
+    }
+    
 // MARK: Private Property
     // Serial Queue
     var queue : DispatchQueue
@@ -50,22 +69,55 @@ extension NLMemoryCache {
      - parameter object:
      - parameter key:
      **/
-    public func set(object: Any, for key: String) {
-        
+    public func set(object: Any, forKey key: String) {
+        lock()
+        let node = NLLinkedMapNode(key: key, value: object, cost: 0, time: 120)
+        linkedMap.insetNodeAtHead(node: node)
+        unlock()
     }
     
     /**
      
      **/
-    public func get(object: Any, for key: String) {
+    public func object(forKey key: String) -> Any? {
+        var value : Any? = nil
         
+        lock()
+        let node = linkedMap._dic.object(forKey: key) as? NLLinkedMapNode<Any>
+//        node?._time = CACurrentMediaTime()
+        if let node = node {
+            linkedMap.bringNodeToHead(node: node)
+        }
+        value = node?._value
+        unlock()
+        
+        return value
     }
     
     /**
      
      **/
-    public func containsObject(for key: String) -> Bool{
-        return true
+    public func containsObjectFor(key: String) -> Bool{
+        var contains = false
+        lock()
+        let node = linkedMap._dic[key]
+        if let _ = node {
+            contains = true
+        }
+        unlock()
+        return contains
+    }
+    
+    /**
+    
+     **/
+    public func removeObjectFor(key: String) {
+        lock()
+        let node = linkedMap._dic.object(forKey: key) as? NLLinkedMapNode<Any>
+        if let node = node {
+            linkedMap.remove(node: node)
+        }
+        unlock()
     }
 }
 
