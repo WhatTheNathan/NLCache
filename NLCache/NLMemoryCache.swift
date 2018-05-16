@@ -176,7 +176,7 @@ open class NLMemoryCache {
     
 // MARK: Designed Constructer & Destructer
     private init() {
-        queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .background)
+        queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .default)
         linkedMap = NLLinkedMap.init()
         
         NotificationCenter.default.addObserver(self,
@@ -188,7 +188,7 @@ open class NLMemoryCache {
                                                name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                object: nil)
         
-//        startAutoTrim()
+        startAutoTrim()
     }
 
     deinit {
@@ -350,7 +350,7 @@ extension NLMemoryCache {
     public func trimToAge() {
         var isFinish = false
         lock()
-        var now = Date().timeIntervalSince1970
+        let now = Date().timeIntervalSince1970
         if ageLimit <= 0 {
             linkedMap.removeAll()
             isFinish = true
@@ -378,19 +378,20 @@ extension NLMemoryCache {
 // MARK: Private Method
 extension NLMemoryCache {
     @objc fileprivate func appDidReceiveMemoryWarningNotification() {
-        if shouldRemoveAllObjectsOnMemoryWarning {
+        if _shouldRemoveAllObjectsOnMemoryWarning {
             removeAllObjects()
         }
     }
     
     @objc fileprivate func appDidEnterBackgroundNotification() {
-        if shouldRemoveAllObjectsWhenEnteringBackground {
+        if _shouldRemoveAllObjectsWhenEnteringBackground {
             removeAllObjects()
         }
     }
     
     private func startAutoTrim() {
-        DispatchQueue.global().asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(autoTrimInterval) * NSEC_PER_SEC), qos: .background) {
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + _autoTrimInterval, qos: .background) {
+            print("here")
             self.trimInBackground()
             self.startAutoTrim()
         }

@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let cache = NLMemoryCache.shared
-        print("what")
         cache.set(object: "haha", forKey: "1")
         let object = cache.object(forKey: "1")
         print(cache.containsObjectFor(key: "1"))
