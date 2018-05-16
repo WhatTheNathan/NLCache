@@ -223,14 +223,12 @@ extension NLMemoryCache {
             let newNode = NLLinkedMapNode.init(key: key, value: object, cost: cost, time: now)
             linkedMap.insetNodeAtHead(node: newNode)
         }
-//        if linkedMap.totalCount > countLimit {
-//            print("fuck")
-//            trimToCount()
-//        }
-//        if linkedMap.totalCost > costLimit {
-//            print("fuck")
-//            trimToCost()
-//        }
+        if linkedMap.totalCount > _countLimit {
+            trimToCount()
+        }
+        if linkedMap.totalCost > _costLimit {
+            trimToCost()
+        }
         unlock()
     }
     
@@ -299,7 +297,7 @@ extension NLMemoryCache {
         if countLimit == 0 {
             linkedMap.removeAll()
             isFinish = true
-        } else if linkedMap.totalCount <= countLimit {
+        } else if linkedMap.totalCount <= _countLimit {
             isFinish = true
         }
         unlock()
@@ -309,7 +307,7 @@ extension NLMemoryCache {
         }
         lock()
         while !isFinish {
-            if linkedMap.totalCount > countLimit {
+            if linkedMap.totalCount > _countLimit {
                 linkedMap.removeTailNode()
             } else {
                 isFinish = true
@@ -327,7 +325,7 @@ extension NLMemoryCache {
         if costLimit == 0 {
             linkedMap.removeAll()
             isFinish = true
-        } else if linkedMap.totalCost <= costLimit {
+        } else if linkedMap.totalCost <= _costLimit {
             isFinish = true
         }
         unlock()
@@ -337,7 +335,7 @@ extension NLMemoryCache {
         }
         lock()
         while !isFinish {
-            if linkedMap.totalCost > costLimit {
+            if linkedMap.totalCost > _costLimit {
                 linkedMap.removeTailNode()
             } else {
                 isFinish = true
@@ -367,7 +365,7 @@ extension NLMemoryCache {
         
         lock()
         while !isFinish {
-            if let node = linkedMap._tail, now - node._time > ageLimit {
+            if let node = linkedMap._tail, now - node._time > _ageLimit {
                 linkedMap.removeTailNode()
             } else {
                 isFinish = true
