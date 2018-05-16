@@ -14,10 +14,10 @@ import Foundation
  * Thread Safety
  * For common write & read:
  *     semaphore lock & current thread
- * Note: Memory access = High-performance
+ * Note: Memory access is High-performance
  *
  * QuestionMark: 异步到并行队列后加锁的读写效率如何?
- * QuestionMark: 释放是否需要更底层的释放?
+ * QuestionMark: 是否需要更底层的存储与释放?
  **/
 open class NLMemoryCache {
     
@@ -300,7 +300,7 @@ extension NLMemoryCache {
     public func trimToCount() {
         var isFinish = false
         lock()
-        if countLimit == 0 {
+        if _countLimit == 0 {
             linkedMap.removeAll()
             isFinish = true
         } else if linkedMap.totalCount <= _countLimit {
@@ -329,7 +329,7 @@ extension NLMemoryCache {
     public func trimToCost() {
         var isFinish = false
         lock()
-        if costLimit == 0 {
+        if _costLimit == 0 {
             linkedMap.removeAll()
             isFinish = true
         } else if linkedMap.totalCost <= _costLimit {
@@ -359,10 +359,12 @@ extension NLMemoryCache {
         var isFinish = false
         lock()
         let now = Date().timeIntervalSince1970
-        if ageLimit <= 0 {
+        if _ageLimit <= 0 {
             linkedMap.removeAll()
             isFinish = true
-        } else if linkedMap._tail != nil || (now - (linkedMap._tail?._time)!) <= ageLimit {
+        } else if linkedMap._tail == nil {
+            isFinish = true
+        } else if let tail = linkedMap._tail, now - tail._time <= _ageLimit {
             isFinish = true
         }
         unlock()
