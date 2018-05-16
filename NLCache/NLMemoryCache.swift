@@ -15,10 +15,9 @@ import Foundation
  * For common write & read:
  *     semaphore lock & current thread
  * Note: Memory access = High-performance
- * For auto release:
- *     async + Semaphore lock + concurrent queue
  *
  * QuestionMark: 异步到并行队列后加锁的读写效率如何?
+ * QuestionMark: 释放是否需要更底层的释放?
  **/
 open class NLMemoryCache {
     
@@ -146,7 +145,7 @@ open class NLMemoryCache {
     
     /**
      If `true`, The cache will remove all objects when the app enter background.
-     The default value is `YES`.
+     The default value is `true`.
      */
     private var _shouldRemoveAllObjectsWhenEnteringBackground : Bool = true
     
@@ -165,7 +164,7 @@ open class NLMemoryCache {
     }
     
 // MARK: Private Property
-    // Concurrent Queue
+    // Serial Queue
     var queue : DispatchQueue
     
     // LinkedMap
@@ -204,8 +203,11 @@ open class NLMemoryCache {
 // MARK: Public Method For get & set & remove
 extension NLMemoryCache {
     /**
-     - parameter object:
-     - parameter key:
+     Sets the value of the specified key in the cache, and associates the key-value
+     pair with the specified cost.
+     - parameter object:  The object to store in the cache.
+     - parameter key:     The key with which to associate the value.
+     - parameter cost:    The cost with which to associate the key-value pair.
      **/
     public func set(object: Any, forKey key: String, withCost cost: UInt = 0) {
         lock()
@@ -233,7 +235,8 @@ extension NLMemoryCache {
     }
     
     /**
-     
+     Returns the value associated with a given key.
+     - parameter key:    An object identifying the value.
      **/
     public func object(forKey key: String) -> Any? {
         var value : Any? = nil
@@ -251,7 +254,8 @@ extension NLMemoryCache {
     }
     
     /**
-     
+     Returns a Boolean value that indicates whether a given key is in cache.
+     - parameter key:    key An object identifying the value.
      **/
     public func containsObjectFor(key: String) -> Bool{
         var contains = false
@@ -265,7 +269,8 @@ extension NLMemoryCache {
     }
     
     /**
-    
+     Removes the value of the specified key in the cache.
+     - parameter key:    key An object identifying the value.
      **/
     public func removeObjectFor(key: String) {
         lock()
@@ -277,7 +282,7 @@ extension NLMemoryCache {
     }
     
     /**
-     
+     Removes all the key-value pairs in the cache.
      **/
     public func removeAllObjects() {
         lock()
@@ -289,7 +294,8 @@ extension NLMemoryCache {
 // MARK: Public Method For Trim
 extension NLMemoryCache {
     /**
-     
+     Removes objects from the cache with LRU, until the `totalCount` is below or equal to
+     the specified value.
      **/
     public func trimToCount() {
         var isFinish = false
@@ -317,7 +323,8 @@ extension NLMemoryCache {
     }
     
     /**
-     
+     Removes objects from the cache with LRU, until the `totalCost` is or equal to
+     the specified value.
      **/
     public func trimToCost() {
         var isFinish = false
@@ -345,7 +352,8 @@ extension NLMemoryCache {
     }
     
     /**
-     
+     Removes objects from the cache with LRU, until all expiry objects removed by the
+     specified value.
      **/
     public func trimToAge() {
         var isFinish = false
@@ -391,7 +399,6 @@ extension NLMemoryCache {
     
     private func startAutoTrim() {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + _autoTrimInterval, qos: .background) {
-            print("here")
             self.trimInBackground()
             self.startAutoTrim()
         }
