@@ -88,9 +88,9 @@ open class NLMemoryCache {
     /**
      The maximum expiry time of objects in cache.
      **/
-    private var _ageLimit : UInt = UInt.max
+    private var _ageLimit : TimeInterval = DBL_MAX
     
-    public var ageLimit : UInt {
+    public var ageLimit : TimeInterval {
         set {
             lock()
             _ageLimit = newValue
@@ -165,7 +165,7 @@ open class NLMemoryCache {
     }
     
 // MARK: Private Property
-    // Serial Queue
+    // Concurrent Queue
     var queue : DispatchQueue
     
     // LinkedMap
@@ -176,7 +176,7 @@ open class NLMemoryCache {
     
 // MARK: Designed Constructer & Destructer
     private init() {
-        queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .default)
+        queue = DispatchQueue(label: "com.nlcache." + String(describing: NLMemoryCache.self), qos: .background)
         linkedMap = NLLinkedMap.init()
         
         NotificationCenter.default.addObserver(self,
@@ -187,6 +187,8 @@ open class NLMemoryCache {
                                                selector: #selector(appDidEnterBackgroundNotification),
                                                name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                object: nil)
+        
+//        startAutoTrim()
     }
 
     deinit {
@@ -205,10 +207,30 @@ extension NLMemoryCache {
      - parameter object:
      - parameter key:
      **/
-    public func set(object: Any, forKey key: String) {
+    public func set(object: Any, forKey key: String, withCost cost: UInt = 0) {
         lock()
-        let node = NLLinkedMapNode(key: key, value: object, cost: 0, time: 120)
-        linkedMap.insetNodeAtHead(node: node)
+        let now = Date().timeIntervalSince1970
+        let node = linkedMap._dic[key]
+        // if already exists
+        if let node = node as? NLLinkedMapNode<Any> {
+            linkedMap.totalCost -= node._cost
+            linkedMap.totalCost += cost
+            node._cost = cost
+            node._time = now
+            node._value = object
+            linkedMap.bringNodeToHead(node: node)
+        } else {
+            let newNode = NLLinkedMapNode.init(key: key, value: object, cost: cost, time: now)
+            linkedMap.insetNodeAtHead(node: newNode)
+        }
+//        if linkedMap.totalCount > countLimit {
+//            print("fuck")
+//            trimToCount()
+//        }
+//        if linkedMap.totalCost > costLimit {
+//            print("fuck")
+//            trimToCost()
+//        }
         unlock()
     }
     
@@ -220,7 +242,7 @@ extension NLMemoryCache {
         
         lock()
         let node = linkedMap._dic.object(forKey: key) as? NLLinkedMapNode<Any>
-//        node?._time = CACurrentMediaTime()
+        node?._time = Date().timeIntervalSince1970
         if let node = node {
             linkedMap.bringNodeToHead(node: node)
         }
@@ -271,7 +293,88 @@ extension NLMemoryCache {
     /**
      
      **/
-//    public func trimToCount()
+    public func trimToCount() {
+        var isFinish = false
+        lock()
+        if countLimit == 0 {
+            linkedMap.removeAll()
+            isFinish = true
+        } else if linkedMap.totalCount <= countLimit {
+            isFinish = true
+        }
+        unlock()
+        
+        if isFinish {
+            return
+        }
+        lock()
+        while !isFinish {
+            if linkedMap.totalCount > countLimit {
+                linkedMap.removeTailNode()
+            } else {
+                isFinish = true
+            }
+        }
+        unlock()
+    }
+    
+    /**
+     
+     **/
+    public func trimToCost() {
+        var isFinish = false
+        lock()
+        if costLimit == 0 {
+            linkedMap.removeAll()
+            isFinish = true
+        } else if linkedMap.totalCost <= costLimit {
+            isFinish = true
+        }
+        unlock()
+        
+        if isFinish {
+            return
+        }
+        lock()
+        while !isFinish {
+            if linkedMap.totalCost > costLimit {
+                linkedMap.removeTailNode()
+            } else {
+                isFinish = true
+            }
+        }
+        unlock()
+    }
+    
+    /**
+     
+     **/
+    public func trimToAge() {
+        var isFinish = false
+        lock()
+        var now = Date().timeIntervalSince1970
+        if ageLimit <= 0 {
+            linkedMap.removeAll()
+            isFinish = true
+        } else if linkedMap._tail != nil || (now - (linkedMap._tail?._time)!) <= ageLimit {
+            isFinish = true
+        }
+        unlock()
+        
+        if isFinish {
+            return
+        }
+        
+        lock()
+        while !isFinish {
+            if let node = linkedMap._tail, now - node._time > ageLimit {
+                linkedMap.removeTailNode()
+            } else {
+                isFinish = true
+            }
+        }
+        unlock()
+    }
 }
 
 // MARK: Private Method
@@ -285,6 +388,21 @@ extension NLMemoryCache {
     @objc fileprivate func appDidEnterBackgroundNotification() {
         if shouldRemoveAllObjectsWhenEnteringBackground {
             removeAllObjects()
+        }
+    }
+    
+    private func startAutoTrim() {
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(autoTrimInterval) * NSEC_PER_SEC), qos: .background) {
+            self.trimInBackground()
+            self.startAutoTrim()
+        }
+    }
+    
+    private func trimInBackground() {
+        queue.async {
+            self.trimToCost()
+            self.trimToCount()
+            self.trimToAge()
         }
     }
 }

@@ -74,9 +74,9 @@ internal class NLLinkedMap<T> {
         if(node == _tail) { _tail = node._pre }
     }
     
-    func removeTailNode() -> Node {
+    func removeTailNode() {
         guard let node = _tail else {
-            return _tail!
+            return
         }
         _dic.removeObject(forKey: node._key)
         totalCount -= 1
@@ -89,7 +89,6 @@ internal class NLLinkedMap<T> {
             _tail = _tail?._pre
             _tail?._next = nil
         }
-        return node
     }
     
     func removeAll() {
