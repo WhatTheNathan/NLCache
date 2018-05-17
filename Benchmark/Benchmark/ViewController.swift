@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YYCache
 
 class ViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class ViewController: UIViewController {
     func memeoryCacheBenchMark() {
         // initialize
         let nl = NLMemoryCache.shared
+        let yy = YYMemoryCache.init()
         
         let keys = NSMutableArray.init()
         let values = NSMutableArray.init()
@@ -44,6 +46,14 @@ class ViewController: UIViewController {
         time = end - begin
         print("NLCache:     \(time)")
         
+        begin = CACurrentMediaTime()
+        for index in 0..<200000 {
+            yy.setObject(values[index], forKey: keys[index])
+        }
+        end = CACurrentMediaTime()
+        time = end - begin
+        print("YYCache:     \(time)\n")
+        
         print("---------------------------------------")
         print("Memory cache get 200000 key-value pairs")
         begin = CACurrentMediaTime()
@@ -53,6 +63,14 @@ class ViewController: UIViewController {
         end = CACurrentMediaTime()
         time = end - begin
         print("NLCache:     \(time)")
+        
+        begin = CACurrentMediaTime()
+        for index in 0..<200000 {
+            yy.object(forKey: keys[index])
+        }
+        end = CACurrentMediaTime()
+        time = end - begin
+        print("YYCache:     \(time)\n")
         
         print("---------------------------------------")
         print("Memory cache get 200000 key-value pairs randomly")
@@ -68,6 +86,14 @@ class ViewController: UIViewController {
         time = end - begin
         print("NLCache:     \(time)")
         
+        begin = CACurrentMediaTime()
+        for index in 0..<200000 {
+            yy.object(forKey: keys[index])
+        }
+        end = CACurrentMediaTime()
+        time = end - begin
+        print("YYCache:     \(time)\n")
+        
         print("---------------------------------------")
         print("Memory cache get 200000 key-value none exist")
         nl.removeAllObjects()
@@ -78,6 +104,14 @@ class ViewController: UIViewController {
         end = CACurrentMediaTime()
         time = end - begin
         print("NLCache:     \(time)")
+        
+        begin = CACurrentMediaTime()
+        for index in 0..<200000 {
+            yy.object(forKey: keys[index])
+        }
+        end = CACurrentMediaTime()
+        time = end - begin
+        print("YYCache:     \(time)\n")
     }
 
     override func didReceiveMemoryWarning() {
