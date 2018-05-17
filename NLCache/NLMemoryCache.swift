@@ -18,7 +18,7 @@ import Foundation
  *
  * QuestionMark: 异步到并行队列后加锁的读写效率如何?
  * QuestionMark: 是否需要更底层的存储与释放?
- **/
+ */
 open class NLMemoryCache {
     
 // MARK: Open Property
@@ -208,7 +208,7 @@ extension NLMemoryCache {
      - parameter object:  The object to store in the cache.
      - parameter key:     The key with which to associate the value.
      - parameter cost:    The cost with which to associate the key-value pair.
-     **/
+     */
     public func set(object: Any, forKey key: String, withCost cost: UInt = 0) {
         lock()
         let now = Date().timeIntervalSince1970
@@ -226,10 +226,14 @@ extension NLMemoryCache {
             linkedMap.insetNodeAtHead(node: newNode)
         }
         if linkedMap.totalCount > _countLimit {
-            trimToCount()
+            queue.async {
+                self.trimToCount()
+            }
         }
         if linkedMap.totalCost > _costLimit {
-            trimToCost()
+            queue.async {
+                self.trimToCost()
+            }
         }
         unlock()
     }
@@ -237,7 +241,7 @@ extension NLMemoryCache {
     /**
      Returns the value associated with a given key.
      - parameter key:    An object identifying the value.
-     **/
+     */
     public func object(forKey key: String) -> Any? {
         var value : Any? = nil
         
@@ -256,7 +260,7 @@ extension NLMemoryCache {
     /**
      Returns a Boolean value that indicates whether a given key is in cache.
      - parameter key:    key An object identifying the value.
-     **/
+     */
     public func containsObjectFor(key: String) -> Bool{
         var contains = false
         lock()
@@ -271,7 +275,7 @@ extension NLMemoryCache {
     /**
      Removes the value of the specified key in the cache.
      - parameter key:    key An object identifying the value.
-     **/
+     */
     public func removeObjectFor(key: String) {
         lock()
         let node = linkedMap._dic.object(forKey: key) as? NLLinkedMapNode<Any>
@@ -283,7 +287,7 @@ extension NLMemoryCache {
     
     /**
      Removes all the key-value pairs in the cache.
-     **/
+     */
     public func removeAllObjects() {
         lock()
         linkedMap.removeAll()
@@ -296,7 +300,7 @@ extension NLMemoryCache {
     /**
      Removes objects from the cache with LRU, until the `totalCount` is below or equal to
      the specified value.
-     **/
+     */
     public func trimToCount() {
         var isFinish = false
         lock()
@@ -325,7 +329,7 @@ extension NLMemoryCache {
     /**
      Removes objects from the cache with LRU, until the `totalCost` is or equal to
      the specified value.
-     **/
+     */
     public func trimToCost() {
         var isFinish = false
         lock()
@@ -354,7 +358,7 @@ extension NLMemoryCache {
     /**
      Removes objects from the cache with LRU, until all expiry objects removed by the
      specified value.
-     **/
+     */
     public func trimToAge() {
         var isFinish = false
         lock()
@@ -388,12 +392,14 @@ extension NLMemoryCache {
 // MARK: Private Method
 extension NLMemoryCache {
     @objc fileprivate func appDidReceiveMemoryWarningNotification() {
+        print("here")
         if _shouldRemoveAllObjectsOnMemoryWarning {
             removeAllObjects()
         }
     }
     
     @objc fileprivate func appDidEnterBackgroundNotification() {
+        print("here")
         if _shouldRemoveAllObjectsWhenEnteringBackground {
             removeAllObjects()
         }

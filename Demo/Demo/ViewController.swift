@@ -17,16 +17,62 @@ class ViewController: UIViewController {
         let cache = NLMemoryCache.shared
         
         /* Test for set*/
-        for index in 0...9 {
-            print(index)
-            cache.set(object: index, forKey: String(index))
-        }
+//        for index in 0...9 {
+//            cache.set(object: index, forKey: String(index))
+//        }
+//        var what = [1,2,3,4,5,6]
+//        cache.set(object: what, forKey: "test")
+//        what = cache.object(forKey: "test") as! [Int]
+//        print(what)
+//        if let value = cache.object(forKey: "123") as? Int {
+//            print(value)
+//        }
         
-        /* Test for get*/
-        for index in 0...9 {
-            let value = cache.object(forKey: String(index))
-        }
+        /* Test for get */
+//        for index in 0...9 {
+//            let value = cache.object(forKey: String(index)) as? Int
+//            print(value)
+//        }
         
+        /* Test for remove */
+//        cache.removeObjectFor(key: "1")
+//        print(cache.containsObjectFor(key: "1"))
+        
+        /* Test for removeAll */
+//        cache.removeAllObjects()
+//        for index in 0...9 {
+//            let value = cache.object(forKey: String(index)) as? Int
+//            print(value)
+//        }
+        
+        /* Test for trimAge */
+//        cache.ageLimit = 5
+//        for index in 0...9 {
+//            sleep(5)
+//            cache.set(object: index, forKey: String(index))
+//        }
+//        for index in 0...9 {
+//            print(cache.containsObjectFor(key: String(index)))
+//        }
+        
+        /* Test for trimCost */
+//        cache.costLimit = 30
+//        for index in 0...9 {
+//            print(index)
+//            cache.set(object: index, forKey: String(index), withCost: UInt(index))
+//        }
+//        for index in 0...9 {
+//            print(cache.containsObjectFor(key: String(index)))
+//        }
+        
+        /* Test for trimCount */
+//        cache.countLimit = 5
+//        for index in 0...9 {
+//            cache.set(object: index, forKey: String(index))
+//        }
+//        for index in 0...9 {
+//            print(cache.containsObjectFor(key: String(index)))
+//        }
         
     }
 

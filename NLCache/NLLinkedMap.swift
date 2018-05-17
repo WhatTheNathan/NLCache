@@ -41,6 +41,7 @@ internal class NLLinkedMap<T> {
             _head = node
         } else {
             _head = node
+            _tail = node
         }
     }
     
