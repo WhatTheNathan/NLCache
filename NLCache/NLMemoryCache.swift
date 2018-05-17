@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  * NLMemoryCache is a fast in-memory cache that stores key-value pairs
@@ -211,7 +212,7 @@ extension NLMemoryCache {
      */
     public func set(object: Any, forKey key: String, withCost cost: UInt = 0) {
         lock()
-        let now = Date().timeIntervalSince1970
+        let now = CACurrentMediaTime()
         let node = linkedMap._dic[key]
         // if already exists
         if let node = node as? NLLinkedMapNode<Any> {
@@ -247,7 +248,7 @@ extension NLMemoryCache {
         
         lock()
         let node = linkedMap._dic.object(forKey: key) as? NLLinkedMapNode<Any>
-        node?._time = Date().timeIntervalSince1970
+        node?._time = CACurrentMediaTime()
         if let node = node {
             linkedMap.bringNodeToHead(node: node)
         }
@@ -362,7 +363,7 @@ extension NLMemoryCache {
     public func trimToAge() {
         var isFinish = false
         lock()
-        let now = Date().timeIntervalSince1970
+        let now = CACurrentMediaTime()
         if _ageLimit <= 0 {
             linkedMap.removeAll()
             isFinish = true
