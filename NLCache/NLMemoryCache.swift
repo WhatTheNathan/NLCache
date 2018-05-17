@@ -392,14 +392,12 @@ extension NLMemoryCache {
 // MARK: Private Method
 extension NLMemoryCache {
     @objc fileprivate func appDidReceiveMemoryWarningNotification() {
-        print("here")
         if _shouldRemoveAllObjectsOnMemoryWarning {
             removeAllObjects()
         }
     }
     
     @objc fileprivate func appDidEnterBackgroundNotification() {
-        print("here")
         if _shouldRemoveAllObjectsWhenEnteringBackground {
             removeAllObjects()
         }
