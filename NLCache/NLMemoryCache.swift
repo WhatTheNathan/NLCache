@@ -49,7 +49,7 @@ open class NLMemoryCache {
     
     /**
      The maximum number of objects the cache should hold.
-     **/
+     */
     private var _countLimit : UInt = UInt.max
     
     public var countLimit : UInt {
@@ -68,7 +68,7 @@ open class NLMemoryCache {
     
     /**
      The maximum total cost that the cache can hold before it starts evicting objects.
-     **/
+     */
     private var _costLimit : UInt = UInt.max
     
     public var costLimit : UInt {
@@ -87,7 +87,7 @@ open class NLMemoryCache {
     
     /**
      The maximum expiry time of objects in cache.
-     **/
+     */
     private var _ageLimit : TimeInterval = DBL_MAX
     
     public var ageLimit : TimeInterval {
@@ -107,7 +107,7 @@ open class NLMemoryCache {
     /**
      The auto trim check time interval in seconds.
      The default value is 5.0.
-     **/
+     */
     private var _autoTrimInterval : TimeInterval = 5.0
     
     public var autoTrimInterval : TimeInterval {
@@ -127,7 +127,7 @@ open class NLMemoryCache {
     /**
      If `true`, the cache will remove all objects when the app receives a memory warning.
      The default value is true.
-     **/
+     */
     private var _shouldRemoveAllObjectsOnMemoryWarning : Bool = true
     
     public var shouldRemoveAllObjectsOnMemoryWarning : Bool {

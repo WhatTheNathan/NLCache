@@ -9,7 +9,7 @@
 import Foundation
 /**
  * a LinkedMap supported NLMemoryCache
- **/
+ */
 internal class NLLinkedMap<T> {
     
     public typealias Node = NLLinkedMapNode<T>
