@@ -16,6 +16,9 @@
 		5360E67120A9CD3A005BBB47 /* NLLinkedMapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */; };
 		5360E67220A9CD3A005BBB47 /* NLLinkedMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */; };
 		5360E67320A9CD3A005BBB47 /* NLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E66F20A9CD3A005BBB47 /* NLCache.swift */; };
+		53EF95C820AEB6E700503771 /* NLDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF95C720AEB6E700503771 /* NLDiskCache.swift */; };
+		53EF95CA20AECA3F00503771 /* NLKVStorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF95C920AECA3F00503771 /* NLKVStorageItem.swift */; };
+		53EF95CC20AECA5800503771 /* NLKVStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF95CB20AECA5800503771 /* NLKVStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLLinkedMapNode.swift; sourceTree = "<group>"; };
 		5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLLinkedMap.swift; sourceTree = "<group>"; };
 		5360E66F20A9CD3A005BBB47 /* NLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLCache.swift; sourceTree = "<group>"; };
+		53EF95C720AEB6E700503771 /* NLDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLDiskCache.swift; sourceTree = "<group>"; };
+		53EF95C920AECA3F00503771 /* NLKVStorageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLKVStorageItem.swift; sourceTree = "<group>"; };
+		53EF95CB20AECA5800503771 /* NLKVStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLKVStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				5360E66F20A9CD3A005BBB47 /* NLCache.swift */,
+				53EF95C720AEB6E700503771 /* NLDiskCache.swift */,
+				53EF95CB20AECA5800503771 /* NLKVStorage.swift */,
+				53EF95C920AECA3F00503771 /* NLKVStorageItem.swift */,
 				5360E66C20A9CD3A005BBB47 /* NLMemoryCache.swift */,
 				5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */,
 				5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */,
@@ -167,9 +176,12 @@
 				5360E67320A9CD3A005BBB47 /* NLCache.swift in Sources */,
 				5360E65120A9CB89005BBB47 /* ViewController.swift in Sources */,
 				5360E67120A9CD3A005BBB47 /* NLLinkedMapNode.swift in Sources */,
+				53EF95C820AEB6E700503771 /* NLDiskCache.swift in Sources */,
 				5360E64F20A9CB89005BBB47 /* AppDelegate.swift in Sources */,
 				5360E67020A9CD3A005BBB47 /* NLMemoryCache.swift in Sources */,
 				5360E67220A9CD3A005BBB47 /* NLLinkedMap.swift in Sources */,
+				53EF95CC20AECA5800503771 /* NLKVStorage.swift in Sources */,
+				53EF95CA20AECA3F00503771 /* NLKVStorageItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

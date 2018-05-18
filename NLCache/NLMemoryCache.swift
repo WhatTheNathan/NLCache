@@ -188,7 +188,7 @@ open class NLMemoryCache {
                                                name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                object: nil)
         
-//        startAutoTrim()
+        startAutoTrim()
     }
 
     deinit {
