@@ -188,7 +188,7 @@ open class NLMemoryCache {
                                                name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                object: nil)
         
-        startAutoTrim()
+//        startAutoTrim()
     }
 
     deinit {
@@ -319,7 +319,7 @@ extension NLMemoryCache {
         lock()
         while !isFinish {
             if linkedMap.totalCount > _countLimit {
-                linkedMap.removeTailNode()
+                _ = linkedMap.removeTailNode()
             } else {
                 isFinish = true
             }
@@ -348,7 +348,7 @@ extension NLMemoryCache {
         lock()
         while !isFinish {
             if linkedMap.totalCost > _costLimit {
-                linkedMap.removeTailNode()
+                _ = linkedMap.removeTailNode()
             } else {
                 isFinish = true
             }
@@ -381,7 +381,7 @@ extension NLMemoryCache {
         lock()
         while !isFinish {
             if let node = linkedMap._tail, now - node._time > _ageLimit {
-                linkedMap.removeTailNode()
+                _ = linkedMap.removeTailNode()
             } else {
                 isFinish = true
             }
