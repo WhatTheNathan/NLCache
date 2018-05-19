@@ -24,14 +24,16 @@ class NLKVStorage {
          _ type: NLKVStorageType) {
         self._type = type
         self._path = path
-        self._dataPath = path + dataDirectoryName
-        self._trashPath = path + trashDirectoryName
+        self._dataPath = path.appending(dataDirectoryName)
+        self._trashPath = path.appending(trashDirectoryName)
         
-//        if (!FileManager.default.createDirectory(atPath: _path, withIntermediateDirectories: true, attributes: nil) ||
-//            !FileManager.default.createDirectory(atPath: _dataPath, withIntermediateDirectories: true, attributes: nil) ||
-//            !FileManager.default.createDirectory(atPath: _trashPath, withIntermediateDirectories: true, attributes: nil)) {
-//            <#code#>
-//        }
+        do {
+            try FileManager.default.createDirectory(atPath: _path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: _dataPath, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: _trashPath, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Unable to create directory \(error.debugDescription)")
+        }
         
     }
 }
@@ -46,8 +48,7 @@ extension NLKVStorage {
     }
     
     /**
-     Save an item or update the item with 'key' if it already exists.This method will save the key-value pair to sqlite. If the `type` is
-     YYKVStorageTypeFile, then this method will failed.
+     Save an item or update the item with 'key' if it already exists.This method will save the key-value pair to sqlite. If the `type` is YYKVStorageTypeFile, then this method will failed.
      - parameter key:  The key, should not be empty (nil or zero length).
      - parameter value: The key, should not be empty (nil or zero length).
      - return Whether succeed.
@@ -64,29 +65,64 @@ extension NLKVStorage {
      - return Whether succeed.
      */
     public func saveItem(withKey key: String, value: Data, fileName: String?) -> Bool {
-//        let nskey = key as NSString
-//        if nskey.length == 0 ||
-        // write2file
-        if let fileName = fileName {
-            let nsFileName = fileName as NSString
-            if nsFileName.length > 0 {
-                
-            }
-        } else {
-            
+        if key == "" {
+            return false
         }
-        return true
+        switch _type {
+        case .NLKVStorageTypeFile:
+            if let fileName = fileName,fileName == "" {
+                return writeFile(withName: fileName, data: value)
+            } else { return false }
+        case .NLKVStorageTypeSQLite:
+            return dbSave(withKey: key, value: value)
+        case .NLKVStorageTypeMixed:
+            if let fileName = fileName,fileName == "" {
+                return writeFile(withName: fileName, data: value)
+            } else {
+                return dbSave(withKey: key, value: value)
+            }
+        }
     }
 }
 
 // MARK: File, Private Method
 extension NLKVStorage {
     private func writeFile(withName fileName: String, data: Data) -> Bool {
-        
+        let path = _dataPath.appending(fileName)
+        do {
+            try data.write(to: URL(fileURLWithPath: path))
+        } catch {
+            return false
+        }
         return true
     }
+    
+    private func readFile(withName fileName: String) -> Data? {
+        let path = _dataPath.appending(fileName)
+        var file : Data
+        do {
+            file = try Data(contentsOf: URL(fileURLWithPath: path))
+        } catch {
+            return nil
+        }
+        return file
+    }
+    
+    private func deleteFile(withName fileName: String) -> Bool {
+        let path = _dataPath.appending(fileName)
+        do {
+            try FileManager.default.removeItem(atPath: path)
+        } catch {
+            return false
+        }
+        return true
+    }
+    
 }
 
 // MARK: DB, Private Method
 extension NLKVStorage {
+    private func dbSave(withKey key: String, value: Data) -> Bool {
+        return true
+    }
 }
