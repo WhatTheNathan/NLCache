@@ -114,6 +114,17 @@ extension NLKVStorage {
     }
     
     // MARK: Get API
+    
+    /**
+     
+     */
+    public func itemExists(forKey key: String) -> Bool {
+        if key == "" {
+            return false
+        }
+        return dbGetItemCount(withKey: key) > 0
+    }
+    
     /**
      Get item with a specified key.
      - parameter key: A specified key.
@@ -353,6 +364,18 @@ extension NLKVStorage {
         
         let item = NLKVStorageItem.init(key, value, UInt(size), fileName, UInt(modification_time), UInt(last_access_time))
         return item
+    }
+    
+    private func dbGetItemCount(withKey key: String) -> Int {
+        let sql = "select count(key) from manifest where key = ?1;"
+        if let stmt = dbPrepareStmt(sql: sql) {
+            let result = sqlite3_step(stmt)
+            if result != SQLITE_ROW {
+                return -1
+            }
+            return sqlite3_column_int(stmt, 0)
+        }
+        return -1
     }
     
     private func dbPrepareStmt(sql: String) -> OpaquePointer? {

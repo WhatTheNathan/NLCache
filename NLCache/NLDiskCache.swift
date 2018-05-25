@@ -14,6 +14,84 @@ import Foundation
 open class NLDiskCache {
 // MARK: Open Property
     
+// MARK: Private vars with Public get & set access
+    /**
+     The maximum number of objects the cache should hold.
+     */
+    private var _countLimit : UInt = UInt.max
+    
+    public var countLimit : UInt {
+        set {
+            lock()
+            _countLimit = newValue
+            unlock()
+        }
+        get {
+            lock()
+            let countLimit = _countLimit
+            unlock()
+            return countLimit
+        }
+    }
+    
+    /**
+     The maximum total cost that the cache can hold before it starts evicting objects.
+     */
+    private var _costLimit : UInt = UInt.max
+    
+    public var costLimit : UInt {
+        set {
+            lock()
+            _costLimit = newValue
+            unlock()
+        }
+        get {
+            lock()
+            let costLimit = _costLimit
+            unlock()
+            return costLimit
+        }
+    }
+    
+    /**
+     The maximum expiry time of objects in cache.
+     */
+    private var _ageLimit : TimeInterval = DBL_MAX
+    
+    public var ageLimit : TimeInterval {
+        set {
+            lock()
+            _ageLimit = newValue
+            unlock()
+        }
+        get {
+            lock()
+            let ageLimit = _ageLimit
+            unlock()
+            return ageLimit
+        }
+    }
+    
+    /**
+     The auto trim check time interval in seconds.
+     The default value is 60.0.
+     */
+    private var _autoTrimInterval : TimeInterval = 60.0
+    
+    public var autoTrimInterval : TimeInterval {
+        set {
+            lock()
+            _autoTrimInterval = newValue
+            unlock()
+        }
+        get {
+            lock()
+            let autoTrimInterval = _autoTrimInterval
+            unlock()
+            return autoTrimInterval
+        }
+    }
+    
 // MARK: Private Property
     private var _path: String
     private var _threshold: UInt
@@ -48,6 +126,22 @@ open class NLDiskCache {
 
 // MARK: Public Method For get & set & remove
 extension NLDiskCache {
+    
+    /**
+     Returns a boolean value that indicates whether a given key is in cache.
+     This method may blocks the calling thread until file read finished.
+     - parameter key: A string identifying the value.
+     */
+    public func containsObject(forKey key: String) -> Bool {
+        if key == "" {
+            return false
+        }
+        var isContain = false
+        lock()
+        isContain = _kv.itemExists(forKey: key)
+        unlock()
+        return isContain
+    }
     
     /**
      Sets the value of the specified key in the cache.
