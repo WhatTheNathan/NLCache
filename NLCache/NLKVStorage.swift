@@ -27,6 +27,7 @@ class NLKVStorage {
     var _db : OpaquePointer?
     var _dbStmtCache : NSMutableDictionary
     
+// MARK: Constructer and desctructer
     init(_ path: String,
          _ type: NLKVStorageType) {
         self._type = type
@@ -45,6 +46,10 @@ class NLKVStorage {
         }
         
         dbOpen()
+    }
+    
+    deinit {
+        dbClose()
     }
 }
 
@@ -171,6 +176,22 @@ extension NLKVStorage {
         }
         return reValue
     }
+    
+    // MARK: Remove API
+    public func removeItem(forKey key: String) -> Bool {
+        if key == "" {
+            return false
+        }
+        switch _type {
+        case .NLKVStorageTypeSQLite:
+            return self.dbDeleteItem(withKey: key)
+        case .NLKVStorageTypeFile, .NLKVStorageTypeMixed:
+            if let fileName = dbGetFileName(withKey: key) {
+                deleteFile(withName: fileName)
+            }
+            return dbDeleteItem(withKey: key)
+        }
+    }
 }
 
 // MARK: File, Private Method
@@ -210,6 +231,7 @@ extension NLKVStorage {
 
 // MARK: DB, Private Method
 extension NLKVStorage {
+    
     private func dbOpen() -> Bool {
         if _db != nil {
             return true
@@ -268,7 +290,7 @@ extension NLKVStorage {
         sqlite3_bind_int(stmt, 3, Int32(size))
         sqlite3_bind_blob(stmt, 4, nsData.bytes, Int32(size), nil)
         sqlite3_bind_int(stmt, 5, Int32(Int(timeStamp)))
-        sqlite3_bind_int(stmt, 5, Int32(Int(timeStamp)))
+        sqlite3_bind_int(stmt, 6, Int32(Int(timeStamp)))
         
         let result = sqlite3_step(stmt)
         if result != SQLITE_DONE {
