@@ -12,6 +12,9 @@
 		5360E63F20A831ED005BBB47 /* NLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63B20A831ED005BBB47 /* NLCache.swift */; };
 		5360E64020A831ED005BBB47 /* NLLinkedMapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */; };
 		5360E64120A831ED005BBB47 /* NLMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */; };
+		5376708720B9A1CD0060D934 /* NLDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376708620B9A1CD0060D934 /* NLDiskCache.swift */; };
+		5376708920B9A1D20060D934 /* NLKVStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376708820B9A1D20060D934 /* NLKVStorage.swift */; };
+		5376708B20B9A1D70060D934 /* NLKVStorageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376708A20B9A1D70060D934 /* NLKVStorageItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,10 @@
 		5360E63B20A831ED005BBB47 /* NLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLCache.swift; path = ../../NLCache/NLCache.swift; sourceTree = "<group>"; };
 		5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLLinkedMapNode.swift; path = ../../NLCache/NLLinkedMapNode.swift; sourceTree = "<group>"; };
 		5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLMemoryCache.swift; path = ../../NLCache/NLMemoryCache.swift; sourceTree = "<group>"; };
+		5376708620B9A1CD0060D934 /* NLDiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLDiskCache.swift; path = ../../NLCache/NLDiskCache.swift; sourceTree = "<group>"; };
+		5376708820B9A1D20060D934 /* NLKVStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLKVStorage.swift; path = ../../NLCache/NLKVStorage.swift; sourceTree = "<group>"; };
+		5376708A20B9A1D70060D934 /* NLKVStorageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NLKVStorageItem.swift; path = ../../NLCache/NLKVStorageItem.swift; sourceTree = "<group>"; };
+		5376708C20B9A20F0060D934 /* NLCache-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NLCache-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +61,11 @@
 		5360E63120A831BB005BBB47 /* NLCache */ = {
 			isa = PBXGroup;
 			children = (
+				5376708C20B9A20F0060D934 /* NLCache-Bridging-Header.h */,
 				5360E63B20A831ED005BBB47 /* NLCache.swift */,
+				5376708620B9A1CD0060D934 /* NLDiskCache.swift */,
+				5376708820B9A1D20060D934 /* NLKVStorage.swift */,
+				5376708A20B9A1D70060D934 /* NLKVStorageItem.swift */,
 				5360E63D20A831ED005BBB47 /* NLMemoryCache.swift */,
 				5360E63A20A831ED005BBB47 /* NLLinkedMap.swift */,
 				5360E63C20A831ED005BBB47 /* NLLinkedMapNode.swift */,
@@ -143,9 +154,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5376708720B9A1CD0060D934 /* NLDiskCache.swift in Sources */,
 				5360E63F20A831ED005BBB47 /* NLCache.swift in Sources */,
 				5360E64120A831ED005BBB47 /* NLMemoryCache.swift in Sources */,
 				5360E63E20A831ED005BBB47 /* NLLinkedMap.swift in Sources */,
+				5376708920B9A1D20060D934 /* NLKVStorage.swift in Sources */,
+				5376708B20B9A1D70060D934 /* NLKVStorageItem.swift in Sources */,
 				5360E64020A831ED005BBB47 /* NLLinkedMapNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,6 +308,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = nathan.NLCache;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/NLCache-Bridging-Header.h ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -321,6 +336,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = nathan.NLCache;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/NLCache-Bridging-Header.h ";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
