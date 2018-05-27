@@ -33,7 +33,6 @@
 		5360E66D20A9CD3A005BBB47 /* NLLinkedMapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLLinkedMapNode.swift; sourceTree = "<group>"; };
 		5360E66E20A9CD3A005BBB47 /* NLLinkedMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLLinkedMap.swift; sourceTree = "<group>"; };
 		5360E66F20A9CD3A005BBB47 /* NLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NLCache.swift; sourceTree = "<group>"; };
-		5370FB9720BA753900B12282 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		53EF95C720AEB6E700503771 /* NLDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLDiskCache.swift; sourceTree = "<group>"; };
 		53EF95C920AECA3F00503771 /* NLKVStorageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLKVStorageItem.swift; sourceTree = "<group>"; };
 		53EF95CB20AECA5800503771 /* NLKVStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLKVStorage.swift; sourceTree = "<group>"; };
@@ -74,7 +73,6 @@
 				5360E65020A9CB89005BBB47 /* ViewController.swift */,
 				5360E65220A9CB89005BBB47 /* Main.storyboard */,
 				5360E65A20A9CB8A005BBB47 /* Info.plist */,
-				5370FB9720BA753900B12282 /* Demo-Bridging-Header.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";

@@ -73,7 +73,28 @@ class ViewController: UIViewController {
 //        for index in 0...9 {
 //            print(cache.containsObjectFor(key: String(index)))
 //        }
-        
+        if let basePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last {
+            /* Test for disk(File) */
+//            let storage = NLKVStorage.init(basePath, .NLKVStorageTypeFile)
+//            let str = "Test"
+//            if let value = str.data(using: .utf8) {
+//                let isSuccess = storage.saveItem(withKey: "nl", value: value, fileName: "nl")
+//                print(isSuccess)
+//            }
+//            if let value = storage.getItemValue(forKey: "nl") {
+//                let ans = String.init(data: value, encoding: .utf8)
+//                print(ans)
+//            }
+//            if storage.itemExists(forKey: "nl") {
+//                print("true")
+//            }
+//            if let item = storage.getItem(forKey: "nl") {
+//                print(item._fileName)
+//            }
+            
+            /* Test for disk(sqlite3) */
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
