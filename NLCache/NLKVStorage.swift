@@ -289,13 +289,13 @@ extension NLKVStorage {
         var isSuccess = true
         do {
             try FileManager.default.moveItem(atPath: _dataPath, toPath: tempPath)
-        } catch let error as Error {
+        } catch _ {
             isSuccess = false
         }
         if isSuccess {
             do {
                 try FileManager.default.createDirectory(atPath: _dataPath, withIntermediateDirectories: true, attributes: nil)
-            } catch let error as Error {
+            } catch _ {
                 isSuccess = false
             }
         }
@@ -304,24 +304,24 @@ extension NLKVStorage {
 
     private func fileEmptyTrashInBackground() {
         trashQueue.async {
-//            let directoryContents = try FileManager.default.contentsOfDirectory(atPath: self._trashPath)
-//            for path in directoryContents {
-//                let fullPath = self._trashPath + path
-//                do {
-//                    try FileManager.default.removeItem(atPath: fullPath)
-//                } catch let error as Error {
-//
-//                }
-//            }
+            do {
+                let directoryContents = try FileManager.default.contentsOfDirectory(atPath: self._trashPath)
+                for path in directoryContents {
+                    let fullPath = self._trashPath + path
+                    try FileManager.default.removeItem(atPath: fullPath)
+                }
+            } catch {
+                
+            }
         }
     }
 
     private func reset() {
         do {
             try FileManager.default.removeItem(atPath: _dbPath)
-            try FileManager.default.removeItem(atPath: _trashPath)
-            try FileManager.default.removeItem(atPath: _dataPath)
-        } catch let error as NSError {
+//            try FileManager.default.removeItem(atPath: _trashPath)
+//            try FileManager.default.removeItem(atPath: _dataPath)
+        } catch _ {
 
         }
         _ = fileMoveAllToTrash()
@@ -402,10 +402,9 @@ extension NLKVStorage {
             sqlite3_bind_int(stmt, 6, Int32(Int(timeStamp)))
             
             let result = sqlite3_step(stmt)
-            if result != SQLITE_DONE {
-                return false
+            if result == SQLITE_DONE {
+                return true
             }
-            return true
         }
         return false
     }
@@ -475,6 +474,7 @@ extension NLKVStorage {
         return -1
     }
 
+    // sql -> stmt
     private func dbPrepareStmt(sql: String) -> OpaquePointer? {
         if sql == "" {
             return nil
