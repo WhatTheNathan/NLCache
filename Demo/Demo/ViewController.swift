@@ -84,23 +84,37 @@ class ViewController: UIViewController {
     // MARK: Test for DiskCache
     private func testForDisk() {
         if let basePath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last {
+            print(basePath)
             /* Test for disk(File) */
             let storage = NLKVStorage.init(basePath, .NLKVStorageTypeFile)
             let str = "Test"
+            let key = "123"
             if let value = str.data(using: .utf8) {
-                let isSuccess = storage.saveItem(withKey: "nll", value: value, fileName: "nll")
+                let isSuccess = storage.saveItem(withKey: key, value: value, fileName: "456")
                 print(isSuccess)
             }
-            if let value = storage.getItemValue(forKey: "nll") {
-                let ans = String.init(data: value, encoding: .utf8)
-                print(ans)
-            }
-            if storage.itemExists(forKey: "nl") {
+            if storage.itemExists(forKey: " ") {
                 print("true")
             }
-            if let item = storage.getItem(forKey: "nl") {
+            if let item = storage.getItem(forKey: key) {
                 print(item._fileName)
             }
+//            if let value = storage.getItemValue(forKey: key) {
+//                let ans = String.init(data: value, encoding: .utf8)
+//                print(ans)
+//            }
+//            print(storage.dbGetItemCount(withKey: key))
+//            print(storage.dbGetFileName(withKey: key))
+//            print( storage.dbGetTotalItemCount() )
+//            if storage.itemExists(forKey: key) {
+//                print("true")
+//            }
+//            if storage.itemExists(forKey: "test") {
+//                print("true")
+//            }
+//            if let item = storage.getItem(forKey: key) {
+//                print(item._fileName)
+//            }
             
             /* Test for disk(sqlite3) */
 //            let storage = NLKVStorage.init(basePath, .NLKVStorageTypeSQLite)

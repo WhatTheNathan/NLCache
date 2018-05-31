@@ -13,6 +13,8 @@ import UIKit
 let dataDirectoryName = "data"
 let trashDirectoryName = "trash"
 let dbFileName = "manifest.sqlite"
+let dbShmFileName = "manifest.sqlite-shm"
+let dbWalFileName = "manifest.sqlite-wal"
 
 /**
  key-value storage supports NLDiskCache
@@ -319,8 +321,8 @@ extension NLKVStorage {
     private func reset() {
         do {
             try FileManager.default.removeItem(atPath: _dbPath)
-//            try FileManager.default.removeItem(atPath: _trashPath)
-//            try FileManager.default.removeItem(atPath: _dataPath)
+            try FileManager.default.removeItem(atPath: _path + "/" + dbShmFileName)
+            try FileManager.default.removeItem(atPath: _path + "/" + dbWalFileName)
         } catch _ {
 
         }
@@ -347,7 +349,7 @@ extension NLKVStorage {
     }
 
     private func dbInitialize() -> Bool {
-        let sql = "pragma journal_mode = wal; pragma synchronous = normal; create table if not exists manifest (key text, filename text, size integer, inline_data blob, modification_time integer, last_access_time integer, primary key(key)); create index if not exists last_access_time_idx on manifest(last_access_time);"
+        let sql = "pragma journal_mode = wal; pragma synchronous = normal; create table if not exists manifest (key text PRIMARY KEY not null, filename text, size integer, inline_data blob, modification_time integer, last_access_time integer); create index if not exists last_access_time_idx on manifest(last_access_time);"
         return dbExecute(sql: sql)
     }
 
@@ -388,19 +390,18 @@ extension NLKVStorage {
         return true
     }
 
-    private func dbSave(withKey key: String, value: Data, fileName: String) -> Bool {
-        let sql = "insert or replace into manifest (key, filename, size, inline_data, modification_time, last_access_time) values (?1, ?2, ?3, ?4, ?5, ?6);"
+    public func dbSave(withKey key: String, value: Data, fileName: String) -> Bool {
+        let sql = "insert or replace into manifest (key, filename, size, inline_data, modification_time, last_access_time) values (?1,?2,?3,?4,?5,?6);"
         if let stmt = dbPrepareStmt(sql: sql) {
             let timeStamp = CACurrentMediaTime() * 1000
             let nsData = value as NSData
             let size = nsData.length
-            sqlite3_bind_text(stmt, 1, key.cString(using: .utf8), -1, nil)
+            sqlite3_bind_text(stmt, 1, "key".cString(using: .utf8), -1, nil)
             sqlite3_bind_text(stmt, 2, fileName.cString(using: .utf8), -1, nil)
             sqlite3_bind_int(stmt, 3, Int32(size))
             sqlite3_bind_blob(stmt, 4, nsData.bytes, Int32(size), nil)
             sqlite3_bind_int(stmt, 5, Int32(Int(timeStamp)))
             sqlite3_bind_int(stmt, 6, Int32(Int(timeStamp)))
-            
             let result = sqlite3_step(stmt)
             if result == SQLITE_DONE {
                 return true
@@ -462,7 +463,7 @@ extension NLKVStorage {
         return item
     }
 
-    private func dbGetItemCount(withKey key: String) -> Int {
+    public func dbGetItemCount(withKey key: String) -> Int {
         let sql = "select count(key) from manifest where key = ?1;"
         if let stmt = dbPrepareStmt(sql: sql) {
             sqlite3_bind_text(stmt, 1, key.cString(using: .utf8), -1, nil)
@@ -492,7 +493,7 @@ extension NLKVStorage {
         return stmt
     }
 
-    private func dbGetFileName(withKey key: String) -> String? {
+    public func dbGetFileName(withKey key: String) -> String? {
         let sql = "select filename from manifest where key = ?1;"
         if let stmt = dbPrepareStmt(sql: sql) {
             sqlite3_bind_text(stmt, 1, key.cString(using: .utf8), -1, nil)
@@ -506,7 +507,7 @@ extension NLKVStorage {
         return nil
     }
 
-    private func dbGetTotalItemCount() -> UInt {
+    public func dbGetTotalItemCount() -> UInt {
         let sql = "select count(*) from manifest;"
         if let stmt = dbPrepareStmt(sql: sql) {
             let result = sqlite3_step(stmt)
